@@ -74,7 +74,7 @@ const App = () => {
 
     return (
         <div className="App">
-            <Layout elements={elements} />
+            <Layout elements={elements} onAddNodeCallback={onAddNodeCallback} />
         </div>
     );
 };

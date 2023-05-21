@@ -17,7 +17,7 @@ const getTitleAndDescription = (type) => {
         case "end":
             return { title: "End", description: "Process ends" };
         default:
-            return null;
+            return { title: "", description: "" };
     }
 };
 

@@ -16,21 +16,8 @@ import { getLayoutedElements } from "./Utils/WorkflowLayoutUtils.jsx";
 import Sidebar from "./Sidebar/Sidebar";
 
 export const Automation = (props) => {
-    const { elements } = props;
-    const [layoutElements, setLayoutElements] = React.useState([]);
-
-    React.useEffect(() => {
-        setLayoutElements(getLayoutedElements(elements));
-    }, [elements]);
-
-    const layoutNodes = layoutElements.filter((x) => x.position);
-    const layoutEdges = layoutElements.filter((x) => !x.position);
-
-    // console.error({ layoutNodes, layoutEdges });
-
-    // const { layoutNodes, layoutEdges } = data;
-
-    // ==========================>
+    const { elements, onAddNodeCallback } = props;
+    // const [layoutElements, setLayoutElements] = useState([]);
 
     const initialNodes = [
         {
@@ -42,15 +29,21 @@ export const Automation = (props) => {
     ];
 
     const reactFlowWrapper = useRef(null);
-    const [nodes, setNodes, onNodesChange] = useNodesState(layoutNodes);
-    const [edges, setEdges, onEdgesChange] = useEdgesState(layoutEdges);
-
+    const [nodes, setNodes, onNodesChange] = useNodesState();
+    const [edges, setEdges, onEdgesChange] = useEdgesState();
     const [reactFlowInstance, setReactFlowInstance] = useState(null);
 
+    // useEffect(() => {
+    //     setNodes(layoutNodes);
+    //     setEdges(layoutEdges);
+    // }, []);
     useEffect(() => {
-        setNodes(layoutNodes); // Update nodes state with layoutNodes
-        setEdges(layoutEdges); // Update edges state with layoutEdges
-    }, [layoutNodes, layoutEdges, setNodes, setEdges]);
+        const layoutElements = getLayoutedElements(elements);
+        const layoutNodes = layoutElements.filter((x) => x.position);
+        const layoutEdges = layoutElements.filter((x) => !x.position);
+        setNodes(layoutNodes);
+        setEdges(layoutEdges);
+    }, [elements]);
 
     const onConnect = useCallback(
         (params) => setEdges((eds) => eds.concat(params)), // Modified: Concatenate edges
@@ -162,7 +155,7 @@ export const Automation = (props) => {
                     </ReactFlow>
                 </div>
 
-                <Sidebar />
+                <Sidebar onAddNodeCallback={onAddNodeCallback} />
             </ReactFlowProvider>
         </div>
     );
