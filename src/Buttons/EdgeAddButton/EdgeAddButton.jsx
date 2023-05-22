@@ -4,6 +4,8 @@ import "./EdgeAddButton.scss";
 
 const EdgeAddButton = (props) => {
     const { style, data, id } = props;
+    console.log(id);
+
     const content = (
         <Menu
             onClick={(event) => data.onAddNodeCallback({ id, type: event.key })}

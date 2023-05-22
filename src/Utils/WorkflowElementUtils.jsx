@@ -138,6 +138,7 @@ const getUpdatedElementsAfterNodeAddition = ({
     onDeleteNodeCallback,
     onNodeClickCallback,
     onAddNodeCallback,
+    position,
 }) => {
     const newNodeId = uuidv4();
     const { title, description } = getTitleAndDescription(type);
@@ -157,30 +158,93 @@ const getUpdatedElementsAfterNodeAddition = ({
         (x) => x.id === targetEdgeId
     );
     const targetEdge = elements[targetEdgeIndex];
-    const { target: targetNodeId } = targetEdge;
-    const updatedTargetEdge = { ...targetEdge, target: newNodeId };
-    clonedElements[targetEdgeIndex] = updatedTargetEdge;
-    clonedElements.push(newNode);
 
-    switch (type) {
-        case "end":
-            return getUpdatedElementsAfterEndNodeAddition();
-        case "waitThenCheck":
-            return getUpdatedElementsAfterRuleNodeAdditon({
-                elements: clonedElements,
-                newNodeId,
-                targetNodeId,
-                onAddNodeCallback,
-            });
-        default:
-            return getUpdatedElementsAfterActionNodeAddition({
-                elements: clonedElements,
-                newNodeId,
-                newNode,
-                targetNodeId,
-                onAddNodeCallback,
-            });
+    // Check if targetEdge is defined before accessing its properties
+    if (targetEdge) {
+        const { target: targetNodeId } = targetEdge;
+        const updatedTargetEdge = { ...targetEdge, target: newNodeId };
+        clonedElements[targetEdgeIndex] = updatedTargetEdge;
+        clonedElements.push(newNode);
+
+        switch (type) {
+            case "end":
+                return getUpdatedElementsAfterEndNodeAddition();
+            case "waitThenCheck":
+                return getUpdatedElementsAfterRuleNodeAdditon({
+                    elements: clonedElements,
+                    newNodeId,
+                    targetNodeId,
+                    onAddNodeCallback,
+                });
+            default:
+                return getUpdatedElementsAfterActionNodeAddition({
+                    elements: clonedElements,
+                    newNodeId,
+                    newNode,
+                    targetNodeId,
+                    onAddNodeCallback,
+                });
+        }
+    } else {
+        // Handle the case when targetEdge is undefined
+        console.error("Target edge is undefined.");
+        return elements; // Return the original elements array
     }
 };
+
+// ================
+//
+//
+// const getUpdatedElementsAfterNodeAddition = ({
+//     elements,
+//     targetEdgeId,
+//     type,
+//     onDeleteNodeCallback,
+//     onNodeClickCallback,
+//     onAddNodeCallback,
+// }) => {
+//     const newNodeId = uuidv4();
+//     const { title, description } = getTitleAndDescription(type);
+//     const newNode = {
+//         id: newNodeId,
+//         type,
+//         data: {
+//             title,
+//             description,
+//             onNodeClickCallback,
+//             onDeleteNodeCallback,
+//         },
+//         position,
+//     };
+//     const clonedElements = _.cloneDeep(elements);
+//     const targetEdgeIndex = clonedElements.findIndex(
+//         (x) => x.id === targetEdgeId
+//     );
+//     const targetEdge = elements[targetEdgeIndex];
+//     const { target: targetNodeId } = targetEdge;
+//     const updatedTargetEdge = { ...targetEdge, target: newNodeId };
+//     clonedElements[targetEdgeIndex] = updatedTargetEdge;
+//     clonedElements.push(newNode);
+
+//     switch (type) {
+//         case "end":
+//             return getUpdatedElementsAfterEndNodeAddition();
+//         case "waitThenCheck":
+//             return getUpdatedElementsAfterRuleNodeAdditon({
+//                 elements: clonedElements,
+//                 newNodeId,
+//                 targetNodeId,
+//                 onAddNodeCallback,
+//             });
+//         default:
+//             return getUpdatedElementsAfterActionNodeAddition({
+//                 elements: clonedElements,
+//                 newNodeId,
+//                 newNode,
+//                 targetNodeId,
+//                 onAddNodeCallback,
+//             });
+//     }
+// };
 
 export { getUpdatedElementsAfterNodeAddition };

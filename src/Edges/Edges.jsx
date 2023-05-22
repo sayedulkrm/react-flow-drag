@@ -60,7 +60,7 @@ export const Condition = (props) => {
                     >
                         <EdgeAddButton
                             {...props}
-                            onClick={() => {}}
+                            onClick={() => console.log("clicked")}
                             style={{ width: buttonWidth, height: buttonHeight }}
                         />
                     </foreignObject>

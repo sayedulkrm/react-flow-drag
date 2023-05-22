@@ -74,7 +74,6 @@ const Sidebar = ({ onAddNodeCallback }) => {
             >
                 End
             </div>
-            <button onClick={onAddNodeCallback}>Add Node</button>
         </div>
     );
 };

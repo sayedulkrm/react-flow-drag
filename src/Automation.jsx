@@ -14,29 +14,16 @@ import { nodeTypes } from "./Nodes/index.jsx";
 import { edgeTypes } from "./Edges/index.jsx";
 import { getLayoutedElements } from "./Utils/WorkflowLayoutUtils.jsx";
 import Sidebar from "./Sidebar/Sidebar";
+import { getUpdatedElementsAfterNodeAddition } from "./Utils/WorkflowElementUtils";
 
 export const Automation = (props) => {
     const { elements, onAddNodeCallback } = props;
-    // const [layoutElements, setLayoutElements] = useState([]);
-
-    const initialNodes = [
-        {
-            id: "1",
-            type: "input",
-            data: { label: "input node" },
-            position: { x: 250, y: 5 },
-        },
-    ];
 
     const reactFlowWrapper = useRef(null);
     const [nodes, setNodes, onNodesChange] = useNodesState();
     const [edges, setEdges, onEdgesChange] = useEdgesState();
     const [reactFlowInstance, setReactFlowInstance] = useState(null);
 
-    // useEffect(() => {
-    //     setNodes(layoutNodes);
-    //     setEdges(layoutEdges);
-    // }, []);
     useEffect(() => {
         const layoutElements = getLayoutedElements(elements);
         const layoutNodes = layoutElements.filter((x) => x.position);
@@ -81,40 +68,21 @@ export const Automation = (props) => {
             };
 
             setNodes((nds) => nds.concat(newNode));
+
+            // ===========
+
+            // setNodes((elements) =>
+            //     getUpdatedElementsAfterNodeAddition({
+            //         elements,
+            //         newNode: newNode,
+            //         targetEdgeId: "e1-2",
+            //     })
+            // );
+
+            // ===========
         },
         [reactFlowInstance, setNodes]
     );
-
-    // const onDrop = useCallback(
-    //     (event) => {
-    //         event.preventDefault();
-
-    //         const reactFlowBounds =
-    //             reactFlowWrapper.current.getBoundingClientRect();
-    //         const type = event.dataTransfer.getData("application/reactflow");
-
-    //         // check if the dropped element is valid
-    //         if (typeof type === "undefined" || !type) {
-    //             return;
-    //         }
-
-    //         const position = reactFlowInstance.project({
-    //             x: event.clientX - reactFlowBounds.left,
-    //             y: event.clientY - reactFlowBounds.top,
-    //         });
-    //         const newNode = {
-    //             id: getId(),
-    //             type,
-    //             position,
-    //             data: { label: `${type} node` },
-    //         };
-
-    //         setNodes((nds) => nds.concat(newNode));
-    //     },
-    //     [reactFlowInstance]
-    // );
-
-    // ==========================   X X X    =======================================
 
     const onDragOver = useCallback((event) => {
         event.preventDefault();
@@ -154,8 +122,6 @@ export const Automation = (props) => {
                         <MiniMap />
                     </ReactFlow>
                 </div>
-
-                <Sidebar onAddNodeCallback={onAddNodeCallback} />
             </ReactFlowProvider>
         </div>
     );

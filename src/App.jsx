@@ -8,6 +8,7 @@ import { getIncomers, getOutgoers } from "react-flow-renderer";
 import Layout from "./Automation.jsx";
 import { initialElements } from "./Data/Elements1.jsx";
 import { getUpdatedElementsAfterNodeAddition } from "./Utils/WorkflowElementUtils.jsx";
+import Sidebar from "./Sidebar/Sidebar";
 
 const App = () => {
     const [elements, setElements] = React.useState([]);
@@ -74,7 +75,8 @@ const App = () => {
 
     return (
         <div className="App">
-            <Layout elements={elements} onAddNodeCallback={onAddNodeCallback} />
+            <Layout elements={elements} />
+            <Sidebar />
         </div>
     );
 };
