@@ -35,3 +35,41 @@ export const Controls = css`
   top: 10px;
   bottom: auto;
 `; */
+
+.node-dropzone {
+    width: 20px;
+    height: 20px;
+    border: 1px solid crimson;
+    background-color: rgb(255, 238, 0);
+    border-radius: 50px;
+    color: crimson;
+    cursor: pointer;
+    display: flex;
+    align-items: start;
+    justify-content: center;
+}
+
+.node-dropzone:hover {
+    background-color: greenyellow;
+}
+
+.sidebar {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    width: auto;
+    border: 1px solid;
+    padding: 10px;
+}
+
+.SidebarItem {
+    background-color: blue;
+    padding: 10px;
+    color: white;
+    text-align: center;
+}
+
+.SidebarItem:hover {
+    background-color: rgb(153, 0, 255);
+    cursor: pointer;
+}

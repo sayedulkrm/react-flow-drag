@@ -1,55 +1,22 @@
-// import React from "react";
-
-// export default () => {
-//     const onDragStart = (event, nodeType) => {
-//         event.dataTransfer.setData("application/reactflow", nodeType);
-//         event.dataTransfer.effectAllowed = "move";
-//     };
-
-//     return (
-//         <aside>
-//             <div className="description">
-//                 You can drag these nodes to the pane on the right.
-//             </div>
-//             <div
-//                 className="dndnode input"
-//                 onDragStart={(event) => onDragStart(event, "input")}
-//                 draggable
-//             >
-//                 Input Node
-//             </div>
-//             <div
-//                 className="dndnode"
-//                 onDragStart={(event) => onDragStart(event, "default")}
-//                 draggable
-//             >
-//                 Default Node
-//             </div>
-//             <div
-//                 className="dndnode output"
-//                 onDragStart={(event) => onDragStart(event, "output")}
-//                 draggable
-//             >
-//                 Output Node
-//             </div>
-//         </aside>
-//     );
-// };
-
 // =================================================================================================
 import React from "react";
 
 const Sidebar = ({ onAddNodeCallback }) => {
+    // const onDragStart = (event, nodeType) => {
+    //     event.dataTransfer.setData("application/reactflow", nodeType);
+    // };
     const onDragStart = (event, nodeType) => {
-        event.dataTransfer.setData("application/reactflow", nodeType);
+        // event.dataTransfer.setData("application/reactflow", "custom"); // Set a custom dataTransfer type
+        event.dataTransfer.setData("nodeType", nodeType); // Store the node type in a custom data attribute
     };
-
     return (
-        <div className="Sidebar">
+        <div className="sidebar">
+            <h5>Drag elements from here!</h5>
             <div
                 className="SidebarItem"
                 draggable
                 onDragStart={(event) => onDragStart(event, "email")}
+                key="email"
             >
                 Email
             </div>
@@ -57,6 +24,7 @@ const Sidebar = ({ onAddNodeCallback }) => {
                 className="SidebarItem"
                 draggable
                 onDragStart={(event) => onDragStart(event, "sms")}
+                key="sms"
             >
                 SMS
             </div>
@@ -64,6 +32,7 @@ const Sidebar = ({ onAddNodeCallback }) => {
                 className="SidebarItem"
                 draggable
                 onDragStart={(event) => onDragStart(event, "waitThenCheck")}
+                key="waitThenCheck"
             >
                 Wait and Check
             </div>
@@ -71,6 +40,7 @@ const Sidebar = ({ onAddNodeCallback }) => {
                 className="SidebarItem"
                 draggable
                 onDragStart={(event) => onDragStart(event, "end")}
+                key="end"
             >
                 End
             </div>

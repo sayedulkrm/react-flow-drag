@@ -17,7 +17,8 @@ import Sidebar from "./Sidebar/Sidebar";
 import { getUpdatedElementsAfterNodeAddition } from "./Utils/WorkflowElementUtils";
 
 export const Automation = (props) => {
-    const { elements, onAddNodeCallback } = props;
+    const { elements } = props;
+    console.log(props);
 
     const reactFlowWrapper = useRef(null);
     const [nodes, setNodes, onNodesChange] = useNodesState();
@@ -98,8 +99,8 @@ export const Automation = (props) => {
                     <ReactFlow
                         nodes={nodes}
                         edges={edges}
-                        // nodesDraggable={false}
-                        // nodesConnectable={false}
+                        nodesDraggable={false}
+                        nodesConnectable={false}
                         nodeTypes={nodeTypes}
                         edgeTypes={edgeTypes}
                         // zoomOnScroll={false}
@@ -110,7 +111,7 @@ export const Automation = (props) => {
                         onConnect={onConnect}
                         fitView
                         onInit={setReactFlowInstance}
-                        onDrop={onDrop}
+                        // onDrop={onDrop}
                         onDragOver={onDragOver}
                         onNodesChange={onNodesChange}
                         onEdgesChange={onEdgesChange}

@@ -168,7 +168,16 @@ const getUpdatedElementsAfterNodeAddition = ({
 
         switch (type) {
             case "end":
-                return getUpdatedElementsAfterEndNodeAddition();
+                // return getUpdatedElementsAfterEndNodeAddition();
+
+                return getUpdatedElementsAfterActionNodeAddition({
+                    elements: clonedElements,
+                    newNodeId,
+                    newNode,
+                    targetNodeId,
+                    onAddNodeCallback,
+                });
+
             case "waitThenCheck":
                 return getUpdatedElementsAfterRuleNodeAdditon({
                     elements: clonedElements,
